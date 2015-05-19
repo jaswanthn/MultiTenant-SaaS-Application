@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+  </script>
+  </head>
+  <body>
+    <div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+
+    
+    <script>
+
+        $(function () {
+            console.log(Highcharts);    
+            var chart = new Highcharts.Chart({
+                    chart: {
+                        renderTo: 'container',
+                        type: 'bar'
+                    },
+                    title: {
+                        text: 'Project Status'
+                    },
+                    xAxis: {
+                        categories: [<% for(var i=0;i<taskIDs.length;i++){ %>
+                        <%=taskIDs[i]%>
+                        <% if(i != taskIDs.length-1){ %>
+                        ,
+                        <%}%>
+                        <%}%>]
+                    },
+                    yAxis: {
+                        min: 0,
+                       allowDecimals : false,
+                        title: {
+                            text: '% completed'
+                        }
+                    },
+                    legend: {
+                        reversed: true
+                    },
+                    plotOptions: {
+                        series: {
+                            stacking: 'normal'
+                        }
+                    },
+                    series: [{
+                        name: '% completed',
+                        data: [<% for(var i=0;i<status.length;i++){ %>
+                        <%=status[i]%>
+                        <% if(i != status.length-1){ %>
+                        ,
+                        <%}%>
+                        <%}%>]
+                    }]
+                });
+            }); 
+    </script>
+  </body>
+</html>
